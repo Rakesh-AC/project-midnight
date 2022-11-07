@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">MidNight tech</a>
+          </div>
+          <ul class="nav navbar-nav">
+            <li><a href="/midapp/">Home</a></li>
+            <li class="active"><a href="/midapp/stop">stop Watch</a></li>
+            <li><a href="/midapp/chat">Chat</a></li>
+          </ul>
+          <form class="navbar-form navbar-left" action="/action_page.php">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search" name="search">
+              <div class="input-group-btn">
+                <button class="btn btn-default" type="submit">
+                  <i class="glyphicon glyphicon-search"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </nav>
+
+      <div class="jumbotron text-center">
+        <h1>Stop watch</h1>
+        <h1><span id="min">00</span>:<span id="sec">00</span>:<span id="mili">00</span></h1>
+        <button class="btn btn-primary" onclick="start_time()">Start</button>
+        <button class="btn btn-primary" onclick="laps()">Laps</button>
+        <button class="btn btn-primary" onclick="stop_time()">Stop</button>
+        <button class="btn btn-primary" onclick="reset_time()">Reset</button>
+    </div>
+
+    <div class="container">
+        <h2>List of Laps</h2>
+        <div id="list" class="list-group">
+  
+        </div>
+      </div>
+
+    <script>
+        var minutes = 0;
+        var seconds = 0;
+        var milisec = 0;
+
+        var span_min=document.getElementById("min");
+        var span_sec=document.getElementById("sec");
+        var span_mili=document.getElementById("mili");
+        
+
+        var myInterval;
+        var is_running=false;
+        function start_time(){
+            if(!is_running){
+                myInterval=setInterval(runnning, 10);
+                is_running=true;
+            }
+
+            
+        }
+
+        
+        function runnning(){
+            milisec+=1;
+            if(milisec%100 == 0){
+                milisec=0;
+                seconds+=1;
+            }
+            if(seconds==60){
+                minutes++;
+                seconds=0;
+            }
+            
+            if(milisec < 10) span_mili.innerHTML='0'+milisec;
+            else span_mili.innerHTML=milisec;
+
+            if(seconds < 10) span_sec.innerHTML='0'+seconds;
+            else span_sec.innerHTML=seconds;
+
+            if(minutes < 10) span_min.innerHTML='0'+minutes;
+            else span_min.innerHTML=minutes;
+        }
+        
+
+        function stop_time(){
+            clearInterval(myInterval);
+            is_running=false;
+        }
+
+        function reset_time(){
+            is_running=false;
+            clearInterval(myInterval);
+            minutes = 0;
+            seconds = 0;
+            milisec = 0;
+
+            span_mili.innerHTML='00';
+            span_sec.innerHTML='00';
+            span_min.innerHTML='00';
+        }
+
+        function laps(){
+            var min_s;
+            var sec_s;
+            var mil_s;
+            if(milisec < 10) mil_s='0'+milisec;
+            else mil_s=milisec;
+
+            if(seconds < 10) sec_s='0'+seconds;
+            else sec_s=seconds;
+
+            if(minutes < 10) min_s='0'+minutes;
+            else min_s=minutes;
+            document.getElementById("list").innerHTML+=`<li class="list-group-item list-group-item-success">`+min_s+`:`+sec_s+":"+mil_s+`</li>`;
+        }
+
+        </script>
+
+</body>
+</html>
