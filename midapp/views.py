@@ -11,3 +11,8 @@ def stopwatch(request):
 
 def chat(request):
     return render(request, 'chat.html')
+
+def hello(request):
+    return render(request, "profile.html")
+
+    
