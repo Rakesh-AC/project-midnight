@@ -11,3 +11,6 @@ def stopwatch(request):
 
 def chat(request):
     return render(request, 'chat.html')
+
+def hemanth(request):
+    return render(request, "profile.html")
