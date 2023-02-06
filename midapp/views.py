@@ -18,6 +18,5 @@ def hemanth(request):
 def hello(request):
     print("hello world")
     return render(request, "hello.html")
-    
 
     
